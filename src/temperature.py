@@ -15,14 +15,14 @@ CMD = ["cat", PATH]
 FIVE_NUM_PATTERN = '[0-9][0-9][0-9][0-9][0-9]'
 
 
-def main() -> None:
-	while True:
-		try:
-			print(f'Temperratura: {get_temperature(): .4f} °C')
-			sleep(1)
-		except KeyboardInterrupt:
-			print("\n")
-			return
+#def main() -> None:
+#	while True:
+#		try:
+#			print(f'Temperratura: {get_temperature(): .4f} °C')
+#			sleep(1)
+#		except KeyboardInterrupt:
+#			print("\n")
+#			return
 
 
 def get_temperature():
@@ -36,5 +36,5 @@ def get_temperature():
 	return temp if temp >= -55.0 and temp <= 150.0 else 0.0
 
 
-if __name__ == '__main__':
-	main()
+#if __name__ == '__main__':
+#	main()
