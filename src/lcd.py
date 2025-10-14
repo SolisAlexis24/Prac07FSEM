@@ -7,6 +7,9 @@ from time import sleep
 LCD_ADDR = 0x27
 I2C_BUS = 1
 BLEN = 1
+CELSIUS = "C"
+FAHRENHEIT = "F"
+KELVIN = "K"
 
 class display():
 	def __init__(self, i2cAddr, i2c_bus):
@@ -14,6 +17,8 @@ class display():
 		self.bus = smbus2.SMBus(i2c_bus)
 		self.__COMMAND = False
 		self.__DATA = True
+		self.__DATA_FLAGS = 0x05
+		self.__COMMAND_FLAGS = 0x04
 		self._initLCD()
 
 	def _initLCD(self):
@@ -34,6 +39,10 @@ class display():
 			self._sendByte(ord(ch), self.__DATA)
 
 
+	def printTempUnits(self, units):
+		self._sendByte(0xdf, self.__DATA)
+		self._sendByte(ord(units), self.__DATA)
+
 	def setCursor(self, x, y):
 		pos = 0x80 + 0x40 * y + x
 		self._sendByte(pos, self.__COMMAND)
@@ -43,9 +52,9 @@ class display():
 
 	def _sendByte(self, byte, isData):
 		if isData:
-			flags = 0x05
+			flags = self.__DATA_FLAGS
 		else:
-			flags = 0x04
+			flags = self.__COMMAND_FLAGS
 
 		buffer = byte & 0xf0
 		buffer |= flags
@@ -72,11 +81,11 @@ class display():
 
 
 
-def main():
-	myLCD = display(LCD_ADDR, I2C_BUS)
-	myLCD.setCursor(0,0)
-	myLCD.printText("Solis")
+#def main():
+#	myLCD = display(LCD_ADDR, I2C_BUS)
+#	myLCD.setCursor(0,0)
+#	myLCD.printText("Solis")
 
 
-if __name__ == '__main__':
-	main()
+#if __name__ == '__main__':
+#	main()
