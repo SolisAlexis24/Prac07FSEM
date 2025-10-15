@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-from temperature import get_temperature
+import DS18B20
 import lcd
 from time import sleep
 import sys
@@ -33,7 +33,7 @@ def updateUnits(CelsiusState, Fahrenheitstate):
 def updateTempLCD():
 	global showingCelsius, showingFahrenheit, LCD
 	while True:
-		temp = get_temperature()
+		temp = DS18B20.LAST_TEMPERATURE
 		firstClearCelsius = True
 		firstClearFahrenheit = True
 		firstRenderCUnits = True
@@ -95,3 +95,5 @@ def LmarqueeText(msg):
 				msgStartIdx = 0
 
 		sleep(DELAY_MSG_S)
+
+

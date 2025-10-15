@@ -11,8 +11,9 @@ import struct
 import time
 from datetime import datetime, timezone
 import csv
+import threading
 import matplotlib
-from temperature import get_temperature
+import DS18B20
 matplotlib.use('AGG')	# Usando el rasterizado a .png
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -91,7 +92,7 @@ def main():
 				print("Nueva grafica disponible")
 				reset_log()
 
-			cTemp = get_temperature()
+			cTemp = DS18B20.LAST_TEMPERATURE
 			log_temp(cTemp)
 			time.sleep(1)
 
@@ -101,6 +102,3 @@ def main():
 def initGraphing():
 	threading.Thread(target=main, daemon=True).start()
 
-
-if __name__ == '__main__':
-	main()

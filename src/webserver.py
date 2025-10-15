@@ -15,6 +15,8 @@ import magic
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 import LCDHandler
+import DS18B20
+import tempGraph
 
 # Nombre o dirección IP del sistema anfitrión del servidor web
 # address = "localhost"
@@ -122,7 +124,9 @@ def main():
 	print("Servidor iniciado")
 	print ("\tAtendiendo solicitudes en http://{}:{}".format(
 		address, port))
+	DS18B20.BackgroundTempSensing()
 	LCDHandler.beginLCD()
+	tempGraph.initGraphing()
 	try:
 		# Mantiene al servidor web ejecutándose en segundo plano
 		webServer.serve_forever()
