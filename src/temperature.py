@@ -30,7 +30,7 @@ def get_temperature():
 		proc = sp.run(CMD, capture_output=True, check=True, text=True)
 
 	except sp.CalledProcessError as e:
-		sys.exit(e.stderr)
+		print(e.stderr)
 
 	temp = float(re.findall(FIVE_NUM_PATTERN, proc.stdout)[0])*1.0E-3
 	return temp if temp >= -55.0 and temp <= 150.0 else 0.0
