@@ -10,6 +10,8 @@ BLEN = 1
 CELSIUS = "C"
 FAHRENHEIT = "F"
 KELVIN = "K"
+FIRST_ROW = 0
+SECOND_ROW = 1
 
 class display():
 	def __init__(self, i2cAddr, i2c_bus):
@@ -50,9 +52,9 @@ class display():
 	def clear(self):
 		self._sendByte(0x01, self.__COMMAND)
 
-	def clearFR(self, x_start, x_end):
-        	"Imprime espacios en blanco desde x_start a x_end"
-        	self.setCursor(x_start,0)
+	def clearRangeRow(self, y_row, x_start, x_end):
+        	"Imprime espacios en blanco desde x_start a x_end en y_row"
+        	self.setCursor(x_start,y_row)
         	self.printText(" " * (x_end-x_start))
 
 
