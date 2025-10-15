@@ -6,6 +6,7 @@
 import os
 import sys
 import re
+import threading
 import subprocess as sp
 from time import sleep
 
@@ -13,28 +14,21 @@ DEVICE = "28-0b4b1b356461"
 PATH = "/sys/bus/w1/devices/" + DEVICE + "/w1_slave"
 CMD = ["cat", PATH]
 FIVE_NUM_PATTERN = '[0-9][0-9][0-9][0-9][0-9]'
+LAST_TEMPERATURE = 0.0
 
 
-#def main() -> None:
-#	while True:
-#		try:
-#			print(f'Temperratura: {get_temperature(): .4f} °C')
-#			sleep(1)
-#		except KeyboardInterrupt:
-#			print("\n")
-#			return
+def getTemperature():
+	global LAST_TEMPERATURE
+	while True:
+		try:
+			proc = sp.run(CMD, capture_output=True, check=True, text=True)
 
+		except sp.CalledProcessError as e:
+			print(e.stderr)
 
-def get_temperature():
-	try:
-		proc = sp.run(CMD, capture_output=True, check=True, text=True)
+		LAST_TEMPERATURE = float(re.findall(FIVE_NUM_PATTERN, proc.stdout)[0])*1.0E-3
+		sleep(0.25)
 
-	except sp.CalledProcessError as e:
-		print(e.stderr)
+def BackgroundTempSensing():
+	threading.Thread(target=getTemperature, daemon=True).start()
 
-	temp = float(re.findall(FIVE_NUM_PATTERN, proc.stdout)[0])*1.0E-3
-	return temp if temp >= -55.0 and temp <= 150.0 else 0.0
-
-
-#if __name__ == '__main__':
-#	main()
