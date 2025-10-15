@@ -176,8 +176,9 @@ function submit(action, delay, celsius, fahrenheit) {
 
 function refreshImage() {
   const img = document.getElementById('tempImage');
-  // Agregar timestamp para evitar cache
-  img.src = 'Temperatura.png?' + new Date().getTime();
+  const oldSrc = img.src;
+  img.src = ''; // truco: limpia primero
+  img.src = oldSrc; // vuelve a cargar la misma URL
 }
 
 // Refrescar cada 30 segundos
