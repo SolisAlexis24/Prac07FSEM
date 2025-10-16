@@ -59,12 +59,12 @@ def updateTempLCD():
 				firstClearFahrenheit = True
 				if firstRenderFUnits:
 					LCD.printTempUnits(lcd.FAHRENHEIT)
-					FirstRenderCUnits = False
+					firstRenderCUnits = False
 
 			elif firstClearFahrenheit:
 				LCD.clearRangeRow(lcd.SECOND_ROW, 8, 15)
 				firstClearFahrenheit = False
-				FirstRenderFUnits = True
+				firstRenderFUnits = True
 
 		sleep(DELAY_TEMP_S)
 
