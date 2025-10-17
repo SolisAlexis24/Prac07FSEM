@@ -25,6 +25,7 @@ def getTemperature():
 
 		except sp.CalledProcessError as e:
 			print(e.stderr)
+			return None
 
 		LAST_TEMPERATURE = float(re.findall(FIVE_NUM_PATTERN, proc.stdout)[0])*1.0E-3
 		sleep(0.25)
